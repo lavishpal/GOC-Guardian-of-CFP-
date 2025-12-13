@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "goc-guardian"
+version = "0.1.0"
+description = "CFP Reviewer Checker - Agent-based system for detecting copied, duplicate, and AI-generated CFP content"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "oumi>=0.1.0",
+    "aiohttp>=3.9.0",
+    "pydantic>=2.0.0",
+    "typing-extensions>=4.8.0",
+]
+
+[project.scripts]
+goc-guardian = "goc_guardian.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["goc_guardian*"]
+
