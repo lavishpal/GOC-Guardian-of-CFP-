@@ -96,7 +96,7 @@ class OumiEvaluator:
         self, text: str, reference_texts: Optional[List[str]] = None
     ) -> float:
         """
-        Heuristic calculation for originality (placeholder until Oumi is fully integrated).
+        Dynamic calculation for originality score.
 
         Args:
             text: The text to analyze
@@ -105,20 +105,61 @@ class OumiEvaluator:
         Returns:
             Originality score between 0.0 and 1.0
         """
-        # Simple heuristic: check for common generic phrases
-        generic_phrases = [
-            "we are pleased to announce",
-            "call for papers",
-            "we invite submissions",
-            "topics of interest include",
-        ]
         text_lower = text.lower()
-        generic_count = sum(1 for phrase in generic_phrases if phrase in text_lower)
-
-        # More generic phrases = lower originality
-        base_score = 0.8
-        penalty = min(0.3, generic_count * 0.1)
-        return max(0.0, base_score - penalty)
+        
+        # Start with high originality, subtract for generic/problematic patterns
+        originality = 1.0
+        
+        # 1. Check for template-like phrases (big penalty)
+        template_phrases = [
+            "we are pleased to announce", "call for papers",
+            "we invite submissions", "topics of interest include",
+            "we welcome papers on", "submissions are invited",
+            "please submit your", "deadline for submission"
+        ]
+        template_count = sum(1 for phrase in template_phrases if phrase in text_lower)
+        originality -= min(0.40, template_count * 0.15)
+        
+        # 2. Penalize generic/buzzword content
+        generic_score = self._calculate_genericness(text)
+        originality -= (generic_score * 0.30)  # Up to 30% penalty for genericness
+        
+        # 3. Penalize AI-like patterns
+        ai_score = self._calculate_ai_heuristic(text)
+        originality -= (ai_score * 0.20)  # Up to 20% penalty for AI patterns
+        
+        # 4. Reward specific, concrete content
+        specific_indicators = [
+            "we reduced", "we increased", "we built", "we discovered",
+            "our team", "our experience", "our production", "at our company",
+            "when we", "after we", "case study", "real example"
+        ]
+        specific_count = sum(1 for phrase in specific_indicators if phrase in text_lower)
+        originality += min(0.15, specific_count * 0.05)  # Bonus for specificity
+        
+        # 5. Check for numbers/metrics (indicates real experience)
+        has_percentages = '%' in text or 'percent' in text_lower
+        has_numbers = any(char.isdigit() for char in text)
+        has_metrics = any(word in text_lower for word in ['million', 'thousand', 'ms', 'seconds', 'users', 'requests'])
+        
+        if has_percentages:
+            originality += 0.10
+        if has_numbers and has_metrics:
+            originality += 0.10
+        
+        # 6. If we have reference texts, check overlap
+        if reference_texts:
+            max_overlap = 0.0
+            text_words = set(text_lower.split())
+            for ref_text in reference_texts:
+                ref_words = set(ref_text.lower().split())
+                if len(text_words) > 0 and len(ref_words) > 0:
+                    overlap = len(text_words & ref_words) / len(text_words)
+                    max_overlap = max(max_overlap, overlap)
+            # High overlap with existing content = lower originality
+            originality -= (max_overlap * 0.30)
+        
+        return max(0.0, min(1.0, originality))
 
     def _calculate_similarity(self, text: str, reference_texts: List[str]) -> Dict[str, float]:
         """
@@ -152,7 +193,7 @@ class OumiEvaluator:
 
     def _calculate_ai_heuristic(self, text: str) -> float:
         """
-        Heuristic for AI generation detection (placeholder).
+        Heuristic for AI generation detection with dynamic scoring.
 
         Args:
             text: The text to analyze
@@ -160,25 +201,65 @@ class OumiEvaluator:
         Returns:
             AI probability score between 0.0 and 1.0
         """
-        # Check for overly formal, generic language patterns
-        ai_indicators = [
-            "furthermore",
-            "moreover",
-            "in conclusion",
-            "it is important to note",
-            "we would like to",
-        ]
         text_lower = text.lower()
-        indicator_count = sum(1 for indicator in ai_indicators if indicator in text_lower)
-
-        # More indicators = higher AI probability
-        base_score = 0.3
-        increase = min(0.4, indicator_count * 0.1)
-        return min(1.0, base_score + increase)
+        score = 0.0
+        
+        # 1. Check for AI-style transition words (very common in ChatGPT)
+        ai_transitions = [
+            "furthermore", "moreover", "additionally", "in conclusion",
+            "it is important to note", "it is worth noting", "notably",
+            "in today's", "in this talk", "in this presentation",
+            "we will explore", "we will delve into", "we will examine",
+            "this talk will", "this presentation will", "this session will"
+        ]
+        transition_count = sum(1 for phrase in ai_transitions if phrase in text_lower)
+        score += min(0.35, transition_count * 0.08)
+        
+        # 2. Check for vague, buzzword-heavy language
+        buzzwords = [
+            "cutting-edge", "state-of-the-art", "revolutionary", "innovative",
+            "transformative", "paradigm", "leverage", "synergy", "robust",
+            "comprehensive overview", "deep dive", "best practices",
+            "real-world", "hands-on", "actionable insights"
+        ]
+        buzzword_count = sum(1 for word in buzzwords if word in text_lower)
+        score += min(0.25, buzzword_count * 0.06)
+        
+        # 3. Check for overly structured/formulaic language
+        formulaic_phrases = [
+            "we are pleased to", "we invite you to", "participants will learn",
+            "attendees will gain", "this session aims to", "the goal of this",
+            "by the end of this", "upon completion"
+        ]
+        formulaic_count = sum(1 for phrase in formulaic_phrases if phrase in text_lower)
+        score += min(0.20, formulaic_count * 0.1)
+        
+        # 4. Check for lack of specifics (AI often uses vague language)
+        specific_indicators = [
+            "we reduced", "we increased", "we built", "we discovered",
+            "our team", "our experience", "our production", "at our company",
+            "when we", "after we", "% improvement", "x faster", "million"
+        ]
+        specific_count = sum(1 for phrase in specific_indicators if phrase in text_lower)
+        # Fewer specifics = more likely AI
+        if specific_count == 0:
+            score += 0.15
+        elif specific_count == 1:
+            score += 0.05
+        
+        # 5. Check sentence structure uniformity (AI tends to be very uniform)
+        sentences = text.split('.')
+        if len(sentences) > 2:
+            avg_length = sum(len(s.split()) for s in sentences) / len(sentences)
+            # Very uniform sentence length suggests AI
+            if 15 <= avg_length <= 25:  # AI sweet spot
+                score += 0.10
+        
+        return min(1.0, score)
 
     def _calculate_genericness(self, text: str) -> float:
         """
-        Calculate how generic the text appears.
+        Calculate how generic the text appears with dynamic scoring.
 
         Args:
             text: The text to analyze
@@ -186,21 +267,48 @@ class OumiEvaluator:
         Returns:
             Genericness score between 0.0 and 1.0
         """
-        # Check for vague, generic terms
-        generic_terms = [
-            "various",
-            "numerous",
-            "wide range",
-            "diverse",
-            "comprehensive",
-            "extensive",
-        ]
         text_lower = text.lower()
-        term_count = sum(1 for term in generic_terms if term in text_lower)
-
-        base_score = 0.4
-        increase = min(0.4, term_count * 0.1)
-        return min(1.0, base_score + increase)
+        score = 0.0
+        
+        # 1. Vague quantifiers (very generic)
+        vague_quantifiers = [
+            "various", "numerous", "many", "several", "multiple",
+            "wide range", "diverse", "extensive", "comprehensive"
+        ]
+        quantifier_count = sum(1 for term in vague_quantifiers if term in text_lower)
+        score += min(0.30, quantifier_count * 0.08)
+        
+        # 2. Generic topics without specificity
+        generic_topics = [
+            "topics include", "areas such as", "domains including",
+            "aspects of", "fundamentals of", "introduction to",
+            "overview of", "basics of", "getting started"
+        ]
+        topic_count = sum(1 for phrase in generic_topics if phrase in text_lower)
+        score += min(0.25, topic_count * 0.12)
+        
+        # 3. Lack of concrete details
+        has_numbers = any(char.isdigit() for char in text)
+        has_metrics = any(word in text_lower for word in ['%', 'percent', 'million', 'thousand', 'seconds', 'ms'])
+        has_tools = any(word in text_lower for word in ['python', 'java', 'docker', 'kubernetes', 'aws', 'postgres', 'redis'])
+        
+        specificity_score = sum([has_numbers, has_metrics, has_tools])
+        if specificity_score == 0:
+            score += 0.25  # Very generic
+        elif specificity_score == 1:
+            score += 0.10  # Somewhat generic
+        # else: specific, no penalty
+        
+        # 4. Filler words and phrases
+        filler_phrases = [
+            "it is important", "it is essential", "it is critical",
+            "we will discuss", "we will cover", "we will explore",
+            "allows you to", "enables you to", "helps you"
+        ]
+        filler_count = sum(1 for phrase in filler_phrases if phrase in text_lower)
+        score += min(0.20, filler_count * 0.10)
+        
+        return min(1.0, score)
 
     async def evaluate_semantic_similarity(
         self, cfp: CFPSubmission, similar_talks: List[SimilarTalk]
