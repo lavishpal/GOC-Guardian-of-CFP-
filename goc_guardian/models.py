@@ -1,4 +1,4 @@
-"""Data models for CFP Reviewer Checker."""
+"""Data models for GOC: Guardians of CFP."""
 
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict

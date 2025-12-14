@@ -1,4 +1,4 @@
-"""Models package for CFP Reviewer Checker."""
+"""Models package for GOC: Guardians of CFP."""
 
 from .corpus_manager import (
     CorpusManager,

@@ -1,4 +1,4 @@
-"""Main entry point for the CFP Reviewer Checker application."""
+"""Main entry point for the GOC: Guardians of CFP application."""
 
 import asyncio
 import sys
@@ -21,7 +21,7 @@ async def analyze_cfp_text(cfp_text: str) -> None:
 
         # Print results in a reviewer-friendly format
         print("\n" + "=" * 80)
-        print("CFP REVIEWER CHECKER - ANALYSIS REPORT")
+        print("GOC: Guardians of CFP - ANALYSIS REPORT")
         print("=" * 80)
         print(f"\nOverall Risk Level: {report.overall_risk_level.upper()}")
         print("\n" + "-" * 80)

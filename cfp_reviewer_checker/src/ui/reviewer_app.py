@@ -20,7 +20,7 @@ from src.ui.prompts import (
 
 def create_app() -> FastAPI:
     """Create and configure FastAPI application."""
-    app = FastAPI(title="CFP Reviewer Checker", version="1.0.0")
+    app = FastAPI(title="GOC: Guardians of CFP", version="1.0.0")
 
     # Global agent instances
     conference_agent: Optional[ConferenceIntelligenceAgent] = None
@@ -99,7 +99,7 @@ def create_app() -> FastAPI:
     @app.get("/api/health")
     async def health_check():
         """Health check endpoint."""
-        return {"status": "healthy", "service": "CFP Reviewer Checker"}
+        return {"status": "healthy", "service": "GOC: Guardians of CFP"}
 
     return app
 
@@ -112,7 +112,7 @@ def get_ui_html() -> str:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFP Reviewer Checker</title>
+    <title>GOC: Guardians of CFP</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -205,7 +205,7 @@ def get_ui_html() -> str:
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛡️ CFP Reviewer Checker</h1>
+            <h1>GOC: Guardians of CFP</h1>
             <p>AI-powered tool to detect copied, duplicate, and AI-generated CFP content</p>
         </div>
         <div class="content">
@@ -224,7 +224,7 @@ def get_ui_html() -> str:
                 </div>
                 <button type="submit">Analyze CFP</button>
             </form>
-            <div class="loading" id="loading">🔄 Analyzing CFP...</div>
+            <div class="loading" id="loading">Analyzing CFP...</div>
             <div class="error" id="error"></div>
             <div class="results" id="results"></div>
         </div>

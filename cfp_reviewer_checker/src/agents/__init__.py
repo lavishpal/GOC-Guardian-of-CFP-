@@ -1,4 +1,4 @@
-"""Agents package for CFP Reviewer Checker."""
+"""Agents package for GOC: Guardians of CFP."""
 
 from .conference_intelligence_agent import ConferenceIntelligenceAgent
 from .similarity_detection_agent import SimilarityDetectionAgent

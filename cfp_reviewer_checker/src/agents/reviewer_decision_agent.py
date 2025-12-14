@@ -158,7 +158,7 @@ class ReviewerDecisionAgent:
         originality_data = evaluation_metrics.get("originality_score", {})
 
         # Semantic similarity with Oumi explanation
-        parts.append(f"\n📊 Semantic Similarity: {semantic_similarity:.2%}")
+        parts.append(f"\nSemantic Similarity: {semantic_similarity:.2%}")
         if isinstance(semantic_sim_data, dict) and semantic_sim_data.get("explanations"):
             # Include Oumi explanation if available
             explanations = semantic_sim_data.get("explanations", {})
@@ -166,40 +166,40 @@ class ReviewerDecisionAgent:
                 first_explanation = list(explanations.values())[0]
                 parts.append(f"   Oumi: {first_explanation}")
         if semantic_similarity > 0.8:
-            parts.append("   ⚠️ HIGH similarity detected with historical talks.")
+            parts.append("   HIGH similarity detected with historical talks.")
         elif semantic_similarity > 0.6:
-            parts.append("   ⚠️ MODERATE similarity detected.")
+            parts.append("   MODERATE similarity detected.")
 
         # Paraphrase likelihood with Oumi explanation
-        parts.append(f"\n📝 Paraphrase Likelihood: {paraphrase_likelihood:.2%}")
+        parts.append(f"\nParaphrase Likelihood: {paraphrase_likelihood:.2%}")
         if isinstance(paraphrase_data, dict) and paraphrase_data.get("explanation"):
             parts.append(f"   Oumi: {paraphrase_data['explanation']}")
         if paraphrase_likelihood > 0.7:
-            parts.append("   ⚠️ HIGH likelihood of paraphrased content.")
+            parts.append("   HIGH likelihood of paraphrased content.")
         elif paraphrase_likelihood > 0.5:
-            parts.append("   ⚠️ MODERATE likelihood of paraphrased content.")
+            parts.append("   MODERATE likelihood of paraphrased content.")
 
         # AI generation with Oumi explanation
-        parts.append(f"\n🤖 AI Generation Confidence: {ai_generation_confidence:.2%}")
+        parts.append(f"\nAI Generation Confidence: {ai_generation_confidence:.2%}")
         if isinstance(ai_gen_data, dict) and ai_gen_data.get("explanation"):
             parts.append(f"   Oumi: {ai_gen_data['explanation']}")
         if ai_generation_confidence > 0.7:
-            parts.append("   ⚠️ HIGH confidence in AI-generated patterns.")
+            parts.append("   HIGH confidence in AI-generated patterns.")
         elif ai_generation_confidence > 0.5:
-            parts.append("   ⚠️ MODERATE confidence in AI-generated patterns.")
+            parts.append("   MODERATE confidence in AI-generated patterns.")
 
         # Originality with Oumi explanation
-        parts.append(f"\n✨ Originality Score: {originality_score:.2%}")
+        parts.append(f"\nOriginality Score: {originality_score:.2%}")
         if isinstance(originality_data, dict) and originality_data.get("explanation"):
             parts.append(f"   Oumi: {originality_data['explanation']}")
         if originality_score < 0.4:
-            parts.append("   ⚠️ LOW originality - content may be copied or heavily derived.")
+            parts.append("   LOW originality - content may be copied or heavily derived.")
         elif originality_score < 0.6:
-            parts.append("   ⚠️ MODERATE originality - review for near-duplicates.")
+            parts.append("   MODERATE originality - review for near-duplicates.")
 
         # Similar talks
         if similar_talks:
-            parts.append(f"\n📚 Found {len(similar_talks)} similar historical talk(s):")
+            parts.append(f"\nFound {len(similar_talks)} similar historical talk(s):")
             for st in similar_talks[:3]:  # Show top 3
                 parts.append(
                     f"   - '{st.talk.title}' ({st.talk.conference or 'Unknown'}, {st.talk.year or 'Unknown'}) "

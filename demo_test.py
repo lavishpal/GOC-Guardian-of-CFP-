@@ -65,7 +65,7 @@ async def run_scenario(coordinator: EnhancedCoordinatorAgent, scenario_name: str
         
         report = await coordinator.analyze_cfp(cfp, fetch_historical=True)
         
-        print(f"\n✅ RESULTS:")
+        print(f"\nRESULTS:")
         print(f"Risk Level: {report.overall_risk_level.upper()}")
         print(f"Confidence: {report.confidence:.2f}")
         
@@ -92,14 +92,14 @@ async def run_scenario(coordinator: EnhancedCoordinatorAgent, scenario_name: str
         return True
         
     except Exception as e:
-        print(f"\n❌ ERROR: {str(e)}")
+        print(f"\nERROR: {str(e)}")
         print(f"Error Type: {type(e).__name__}")
         return False
 
 
 async def run_all_scenarios():
     """Run all demo scenarios."""
-    print("\n🚀 CFP GUARDIAN - DEMO TEST SCENARIOS")
+    print("\nCFP GUARDIAN - DEMO TEST SCENARIOS")
     print("=" * 80)
     
     coordinator = EnhancedCoordinatorAgent()
@@ -120,7 +120,7 @@ async def run_all_scenarios():
         print("DEMO SUMMARY")
         print("=" * 80)
         for scenario_name, success in results.items():
-            status = "✅ PASSED" if success else "❌ FAILED"
+            status = "PASSED" if success else "FAILED"
             print(f"{scenario_name.ljust(20)}: {status}")
         
         total = len(results)
@@ -153,11 +153,11 @@ def main():
     if len(sys.argv) > 1:
         # Run specific scenario
         scenario_name = sys.argv[1].lower()
-        print(f"\n🎯 Running scenario: {scenario_name}")
+        print(f"\nRunning scenario: {scenario_name}")
         asyncio.run(run_single_scenario(scenario_name))
     else:
         # Run all scenarios
-        print("\n🎯 Running all scenarios (use 'python demo_test.py <scenario_name>' for specific scenario)")
+        print("\nRunning all scenarios (use 'python demo_test.py <scenario_name>' for specific scenario)")
         print(f"Available scenarios: {', '.join(SCENARIOS.keys())}")
         asyncio.run(run_all_scenarios())
 

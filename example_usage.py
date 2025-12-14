@@ -1,11 +1,11 @@
-"""Example usage of the CFP Reviewer Checker."""
+"""Example usage of the GOC: Guardians of CFP."""
 
 import asyncio
 from goc_guardian.agents.coordinator import CoordinatorAgent
 
 
 async def example():
-    """Example of using the CFP Reviewer Checker."""
+    """Example of using the GOC: Guardians of CFP."""
     # Sample CFP text
     cfp_text = """
     We are pleased to announce the Call for Papers for the International Conference on 

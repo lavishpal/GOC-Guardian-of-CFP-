@@ -1,4 +1,4 @@
-"""Utility modules for the CFP Reviewer Checker."""
+"""Utility modules for the GOC: Guardians of CFP."""
 
 from .exceptions import (
     EvaluationError,

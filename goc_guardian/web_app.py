@@ -1,4 +1,4 @@
-"""Web application for CFP Reviewer Checker using FastAPI."""
+"""Web application for GOC: Guardians of CFP using FastAPI."""
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -11,7 +11,7 @@ from goc_guardian.agents.enhanced_coordinator import EnhancedCoordinatorAgent
 from goc_guardian.utils.exceptions import InvalidInputError, EvaluationError
 
 
-app = FastAPI(title="CFP Reviewer Checker", version="1.0.0")
+app = FastAPI(title="GOC: Guardians of CFP", version="1.0.0")
 
 # Global coordinator instance
 coordinator: Optional[EnhancedCoordinatorAgent] = None
@@ -51,7 +51,7 @@ async def root():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFP Reviewer Checker</title>
+    <title>GOC: Guardians of CFP</title>
     <style>
         * {
             margin: 0;
@@ -247,7 +247,7 @@ async def root():
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛡️ CFP Reviewer Checker</h1>
+            <h1>GOC: Guardians of CFP</h1>
             <p>AI-powered tool to detect copied, duplicate, and AI-generated CFP content</p>
         </div>
         <div class="content">
@@ -276,7 +276,7 @@ async def root():
                 <button type="submit">Analyze CFP</button>
             </form>
             <div class="loading" id="loading">
-                <p>🔄 Analyzing CFP... This may take a moment.</p>
+                <p>Analyzing CFP... This may take a moment.</p>
             </div>
             <div class="error" id="error"></div>
             <div class="results" id="results"></div>
@@ -460,7 +460,7 @@ async def analyze_cfp(request: CFPRequest):
 @app.get("/api/health")
 async def health_check():
     """Health check endpoint."""
-    return {"status": "healthy", "service": "CFP Reviewer Checker"}
+    return {"status": "healthy", "service": "GOC: Guardians of CFP"}
 
 
 if __name__ == "__main__":

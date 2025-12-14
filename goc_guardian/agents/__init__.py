@@ -1,4 +1,4 @@
-"""Agent modules for the CFP Reviewer Checker."""
+"""Agent modules for the GOC: Guardians of CFP."""
 
 from .base import BaseAgent
 from .abstract_analysis import AbstractAnalysisAgent

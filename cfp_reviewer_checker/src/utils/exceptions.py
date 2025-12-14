@@ -1,4 +1,4 @@
-"""Custom exceptions for the CFP Reviewer Checker."""
+"""Custom exceptions for the GOC: Guardians of CFP."""
 
 
 class EvaluationError(Exception):

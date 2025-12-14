@@ -1,7 +1,7 @@
 #!/bin/bash
 # Cleanup script for CFP Guardian project
 
-echo "🧹 Cleaning up CFP Guardian project..."
+echo "Cleaning up CFP Guardian project..."
 
 # Remove build artifacts
 echo "Removing build artifacts..."
@@ -26,6 +26,6 @@ find . -type f -name "*.swo" -delete
 find . -type f -name "*~" -delete
 find . -type f -name ".DS_Store" -delete
 
-echo "✅ Cleanup complete!"
+echo "Cleanup complete!"
 echo ""
 echo "Note: .venv/ and .git/ are preserved (as they should be)"

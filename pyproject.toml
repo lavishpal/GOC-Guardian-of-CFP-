@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "goc-guardian"
 version = "0.1.0"
-description = "CFP Reviewer Checker - Agent-based system for detecting copied, duplicate, and AI-generated CFP content"
+description = "GOC: Guardians of CFP - Agent-based system for detecting copied, duplicate, and AI-generated CFP content"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [

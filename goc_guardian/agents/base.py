@@ -1,4 +1,4 @@
-"""Base agent class for the CFP Reviewer Checker."""
+"""Base agent class for the GOC: Guardians of CFP."""
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict
@@ -15,7 +15,7 @@ class AgentResult(BaseModel):
 
 
 class BaseAgent(ABC):
-    """Base class for all agents in the CFP Reviewer Checker."""
+    """Base class for all agents in the GOC: Guardians of CFP."""
 
     def __init__(self, name: str):
         """

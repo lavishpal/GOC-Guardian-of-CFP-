@@ -73,7 +73,7 @@ async def analyze_test_case(coordinator, case_num, case_data):
         report = await coordinator.analyze_cfp(cfp, fetch_historical=False)
         
         # Display results
-        print(f"\n✅ RESULTS:")
+        print(f"\nRESULTS:")
         print(f"Overall Risk Level: {report.overall_risk_level.upper()}")
         
         metrics = report.evaluation_metrics
@@ -85,11 +85,11 @@ async def analyze_test_case(coordinator, case_num, case_data):
         # Color-coded interpretation
         ai_prob = metrics.ai_generation_probability
         if ai_prob >= 0.6:
-            ai_status = "🚨 HIGH (Likely AI-generated)"
+            ai_status = "HIGH (Likely AI-generated)"
         elif ai_prob >= 0.3:
-            ai_status = "⚠️  MEDIUM (Some AI patterns)"
+            ai_status = "MEDIUM (Some AI patterns)"
         else:
-            ai_status = "✅ LOW (Appears human-written)"
+            ai_status = "LOW (Appears human-written)"
         
         print(f"\nInterpretation: {ai_status}")
         
@@ -101,13 +101,13 @@ async def analyze_test_case(coordinator, case_num, case_data):
         return True
         
     except Exception as e:
-        print(f"\n❌ ERROR: {str(e)}")
+        print(f"\nERROR: {str(e)}")
         return False
 
 
 async def run_all_tests():
     """Run all test cases."""
-    print("\n🧪 CFP GUARDIAN - INTERACTIVE TEST SUITE")
+    print("\nCFP GUARDIAN - INTERACTIVE TEST SUITE")
     print("=" * 80)
     print("Testing different types of CFP content to demonstrate dynamic evaluation")
     print("=" * 80)
@@ -118,15 +118,15 @@ async def run_all_tests():
         for case_num in sorted(TEST_CASES.keys()):
             success = await analyze_test_case(coordinator, case_num, TEST_CASES[case_num])
             if not success:
-                print(f"\n⚠️  Test case {case_num} failed")
+                print(f"\nTest case {case_num} failed")
             
             # Pause between tests
             if case_num != list(TEST_CASES.keys())[-1]:
-                input("\n📋 Press Enter to continue to next test...")
+                input("\nPress Enter to continue to next test...")
         
         # Final summary
         print("\n" + "=" * 80)
-        print("🎉 TEST SUMMARY")
+        print("TEST SUMMARY")
         print("=" * 80)
         print("If you see DIFFERENT scores for each test case, the system is working!")
         print("\nKey observations:")
@@ -134,7 +134,7 @@ async def run_all_tests():
         print("  • Technical/Specific text → LOW AI probability (0-20%)")
         print("  • Buzzword-heavy text → VERY HIGH AI probability (70-90%)")
         print("  • Real but simple text → LOW AI probability (10-30%)")
-        print("\n✅ Dynamic evaluation is WORKING as expected!")
+        print("\nDynamic evaluation is WORKING as expected!")
         print("=" * 80)
         
     finally:
@@ -143,12 +143,12 @@ async def run_all_tests():
 
 async def run_custom_test():
     """Allow user to input custom CFP for testing."""
-    print("\n✏️  CUSTOM CFP TEST")
+    print("\nCUSTOM CFP TEST")
     print("=" * 80)
     
     title = input("Enter CFP Title: ").strip()
     if len(title) < 10:
-        print("❌ Title must be at least 10 characters")
+        print("Title must be at least 10 characters")
         return
     
     print("\nEnter Abstract (press Ctrl+D when done):")
@@ -162,7 +162,7 @@ async def run_custom_test():
     
     abstract = "\n".join(abstract_lines).strip()
     if len(abstract) < 50:
-        print("❌ Abstract must be at least 50 characters")
+        print("Abstract must be at least 50 characters")
         return
     
     coordinator = EnhancedCoordinatorAgent()
@@ -193,10 +193,10 @@ async def run_custom_test():
 def main():
     """Main entry point."""
     if len(sys.argv) > 1 and sys.argv[1] == "--custom":
-        print("🎯 Running custom test mode")
+        print("Running custom test mode")
         asyncio.run(run_custom_test())
     else:
-        print("🎯 Running all test cases")
+        print("Running all test cases")
         print("Tip: Use --custom flag to test your own CFP text")
         asyncio.run(run_all_tests())
 

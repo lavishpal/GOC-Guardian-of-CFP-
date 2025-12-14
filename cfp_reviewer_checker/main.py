@@ -1,4 +1,4 @@
-"""Main entry point for CFP Reviewer Checker."""
+"""Main entry point for GOC: Guardians of CFP."""
 
 import asyncio
 import sys
@@ -30,30 +30,30 @@ async def analyze_cfp_cli(title: str, abstract: str, description: str = None):
             description=description,
         )
 
-        print("🔍 Analyzing CFP...")
+        print("Analyzing CFP...")
         print(f"Title: {cfp.title}\n")
 
         # Step 1: Conference intelligence - crawl and store talks
-        print("📊 Crawling and storing historical talks...")
+        print("Crawling and storing historical talks...")
         crawl_result = await conference_agent.crawl_and_store()
         print(f"Crawled {crawl_result['talks_fetched']} talks, stored {crawl_result['talks_stored']} in corpus\n")
 
         # Step 2: Similarity detection - retrieve from corpus (returns top 5)
-        print("🔎 Detecting similar talks from corpus...")
+        print("Detecting similar talks from corpus...")
         similar_talks = await similarity_agent.find_similar_talks(cfp)
         print(f"Found {len(similar_talks)} similar talks (top 5)\n")
 
         # Step 3: Oumi evaluation
-        print("🤖 Running Oumi evaluation...")
+        print("Running Oumi evaluation...")
         evaluation_metrics = await oumi_agent.evaluate(cfp, similar_talks)
 
         # Step 4: Generate report
-        print("📝 Generating report...\n")
+        print("Generating report...\n")
         report = decision_agent.generate_report(cfp, similar_talks, evaluation_metrics)
 
         # Display results
         print("=" * 80)
-        print("CFP REVIEWER CHECKER - ANALYSIS REPORT")
+        print("GOC: Guardians of CFP - ANALYSIS REPORT")
         print("=" * 80)
         print(f"\nRecommendation: {report.recommendation}")
         print(f"\n{report.explanation}")

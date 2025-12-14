@@ -1,38 +1,38 @@
 # CFP Guardian Demo Guide
 
-## 🎯 Quick Summary
+## Quick Summary
 
 This project has **TWO similar implementations**:
 1. **`goc_guardian/`** - Simplified, coordinator-based (RECOMMENDED for demo)
 2. **`cfp_reviewer_checker/`** - More modular with corpus management
 
-## 📦 Project Structure Explained
+## Project Structure Explained
 
-### ✅ Keep These:
+### Keep These:
 - **`goc_guardian/`** - Main implementation with web UI and coordinator agents
 - **`README.md`** - Project documentation
 - **`requirements.txt`** - Python dependencies
 - **`pyproject.toml`** - Package configuration
 - **`example_usage.py`** - Usage examples
 
-### ⚠️ Redundant (Consider Removing):
+### Redundant (Consider Removing):
 - **`cfp_reviewer_checker/`** - Alternative implementation with similar features
   - **Unique features**: CorpusManager (persistent storage), ParallelCrawler
   - **Decision**: Keep if you need persistent corpus storage, otherwise remove
 
-### ❌ Should Remove:
+### Should Remove:
 - **`goc_guardian.egg-info/`** - Build artifacts (already in .gitignore)
   ```bash
   rm -rf goc_guardian.egg-info/
   ```
 
-### 🔒 Already Properly Ignored:
+### Already Properly Ignored:
 - **`.venv/`** - Virtual environment (in .gitignore)
 - **`.git/`** - Git repository (standard, keep)
 
 ---
 
-## 🚀 Demo Preparation Steps
+## Demo Preparation Steps
 
 ### Step 1: Environment Setup
 
@@ -66,15 +66,15 @@ OUMI_MAX_RETRIES=3
 EOF
 ```
 
-⚠️ **Important**: Get your Oumi API key from: https://oumi.ai (or your provider)
+**Important**: Get your Oumi API key from: https://oumi.ai (or your provider)
 
 ### Step 3: Choose Your Demo Approach
 
-#### **Option A: Web UI Demo (RECOMMENDED)** 🌐
+#### **Option A: Web UI Demo (RECOMMENDED)**
 
 ```bash
 # Start the web server
-python -m goc_guardian.web_app
+python3 -m goc_guardian.web_app
 
 # Open browser to: http://localhost:8000
 ```
@@ -93,7 +93,7 @@ python -m goc_guardian.web_app
    - Evaluation metrics
    - Recommendations
 
-#### **Option B: Command Line Demo** 💻
+#### **Option B: Command Line Demo**
 
 ```bash
 # Run example
@@ -103,7 +103,7 @@ python example_usage.py
 python -m goc_guardian.main "Your CFP text here..."
 ```
 
-#### **Option C: Python API Demo** 🐍
+#### **Option C: Python API Demo**
 
 ```python
 import asyncio
@@ -132,7 +132,7 @@ asyncio.run(demo())
 
 ---
 
-## 🧪 Test Scenarios for Demo
+## Test Scenarios for Demo
 
 ### Scenario 1: Generic CFP (Should flag as risky)
 
@@ -191,7 +191,7 @@ containerized applications. Perfect for beginners wanting to learn Docker.
 
 ---
 
-## 🎬 Demo Presentation Flow
+## Demo Presentation Flow
 
 ### 1. **Introduction** (2 min)
    - Problem: Conference reviewers need to detect copied/generic CFPs
@@ -226,7 +226,7 @@ containerized applications. Perfect for beginners wanting to learn Docker.
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Issue: Oumi API Not Available
 
@@ -258,9 +258,9 @@ pip install -e .
 
 ---
 
-## 📊 What to Highlight in Demo
+## What to Highlight in Demo
 
-### ✅ Strengths:
+### Strengths:
 1. **Agent-based architecture** - Modular, extensible
 2. **Async processing** - Fast, efficient
 3. **Graceful degradation** - Works even if APIs fail
@@ -268,7 +268,7 @@ pip install -e .
 5. **AI-powered** - Oumi evaluation engine
 6. **Reviewer-friendly UI** - Clear risk levels and recommendations
 
-### 🎯 Use Cases:
+### Use Cases:
 1. Conference program committees
 2. CFP screening automation
 3. Plagiarism detection
@@ -276,7 +276,7 @@ pip install -e .
 
 ---
 
-## 🎨 Quick Cleanup Commands
+## Quick Cleanup Commands
 
 ```bash
 # Remove build artifacts
@@ -294,7 +294,7 @@ find . -type f -name "*.pyc" -delete
 
 ---
 
-## 📝 Post-Demo Next Steps
+## Post-Demo Next Steps
 
 1. **Add Tests**:
    ```bash
@@ -319,7 +319,7 @@ find . -type f -name "*.pyc" -delete
 
 ---
 
-## 🤝 Decision: Keep or Remove cfp_reviewer_checker?
+## Decision: Keep or Remove cfp_reviewer_checker?
 
 ### Keep if:
 - You need **persistent corpus storage** (CorpusManager)
@@ -335,7 +335,7 @@ find . -type f -name "*.pyc" -delete
 
 ---
 
-## 📞 Demo Checklist
+## Demo Checklist
 
 - [ ] Virtual environment activated
 - [ ] Dependencies installed
@@ -349,4 +349,4 @@ find . -type f -name "*.pyc" -delete
 
 ---
 
-Good luck with your demo! 🚀
+Good luck with your demo!

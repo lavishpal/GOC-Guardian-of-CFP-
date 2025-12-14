@@ -1,4 +1,4 @@
-# CFP Reviewer Checker
+# GOC: Guardians of CFP
 
 A production-quality, AI-powered, agent-based Python application that helps conference reviewers detect:
 - Copied CFP abstracts/descriptions

@@ -1,6 +1,6 @@
 # Quick Start Guide - CFP Guardian
 
-## ⚡ 5-Minute Demo Setup
+## 5-Minute Demo Setup
 
 ### 1. Install Dependencies (1 min)
 ```bash
@@ -14,7 +14,7 @@ pip install -r requirements.txt
 python test_evaluator.py
 ```
 
-You should see **different scores** for each test case. If you do, the fix is working! ✅
+You should see **different scores** for each test case. If you do, the fix is working!
 
 ### 2. Configure Environment (1 min)
 ```bash
@@ -51,7 +51,7 @@ python example_usage.py
 
 ---
 
-## 📋 Pre-Demo Checklist
+## Pre-Demo Checklist
 
 - [ ] Virtual environment activated
 - [ ] Dependencies installed
@@ -62,7 +62,7 @@ python example_usage.py
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### "No module named 'goc_guardian'"
 ```bash
@@ -83,7 +83,7 @@ chmod +x cleanup.sh
 
 ---
 
-## 📚 More Information
+## More Information
 
 - Full guide: `DEMO_GUIDE.md`
 - Project README: `README.md`
@@ -91,13 +91,13 @@ chmod +x cleanup.sh
 
 ---
 
-## 🎯 What This Project Does
+## What This Project Does
 
 **CFP Guardian** helps conference reviewers detect:
-- ✅ Copied/plagiarized CFP content
-- ✅ AI-generated submissions
-- ✅ Generic/vague proposals
-- ✅ Duplicate or near-duplicate talks
+- Copied/plagiarized CFP content
+- AI-generated submissions
+- Generic/vague proposals
+- Duplicate or near-duplicate talks
 
 **How it works**:
 1. Fetches historical accepted talks (Sched, Sessionize)
@@ -107,4 +107,4 @@ chmod +x cleanup.sh
 
 ---
 
-Good luck! 🚀
+Good luck!
